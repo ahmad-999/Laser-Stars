@@ -1,0 +1,2 @@
+rootProject.name = "Laser Stars"
+include ':app'
