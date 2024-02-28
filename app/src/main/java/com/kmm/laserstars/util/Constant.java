@@ -9,10 +9,19 @@ public class Constant {
     public static final String SELECTED_NAMES = "names";
     public static final String SELECTED_DESIGNS_TITLE = "الوسوم المختارة : ";
 
-    private static final int ACCEPTED_WIDTH = 120;
-    private static final int ACCEPTED_HEIGHT = 330;
+    private static  double ACCEPTED_WIDTH = -1;
+    private static double ACCEPTED_HEIGHT = -1;
 
-    public static boolean CHECK_IMAGE_DIM(int height, int width) {
-        return height == ACCEPTED_HEIGHT && width == ACCEPTED_WIDTH;
+    public static void SET_ACCEPTED_DIM(double height, double width) {
+        ACCEPTED_HEIGHT = height;
+        ACCEPTED_WIDTH = width;
     }
+    public static double getAcceptedWidth(){
+        return ACCEPTED_WIDTH;
+    }
+    public static double getAcceptedHeight(){
+        return ACCEPTED_HEIGHT;
+    }
+
+
 }

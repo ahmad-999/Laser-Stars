@@ -42,6 +42,7 @@ public class MainFragment extends Fragment {
 
     private MainViewModel mViewModel;
     private MainFragmentBinding binding;
+    private AllDesignAdapter adapter = null;
 
 
     @Nullable
@@ -49,9 +50,10 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = MainFragmentBinding.inflate(inflater, container, false);
-//        RecyclerView.LayoutManager layoutManager =
-//                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-//        binding.designs.setLayoutManager(layoutManager);
+        adapter = new AllDesignAdapter(new ArrayList<>());
+        binding.designs.setItemAnimator(new ScaleInAnimator());
+        binding.designs.setAdapter(adapter);
+
         mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         mViewModel.refreshTagGenres(getViewLifecycleOwner());
         mViewModel.getAllTagGenres().observe(getViewLifecycleOwner(), this::onAllTagsArrive);
@@ -65,13 +67,9 @@ public class MainFragment extends Fragment {
                     intent.getExtras().getSerializable("designs");
             onAllDesignsArrive(data);
         }
-//        binding.searchByTags.setOnClickListener(v -> {
-//            NavController navController =
-//                    NavHostFragment.findNavController(this);
-//            navController.navigate(R.id.action_homeFragment_to_searchByTagsFragment);
-//        });
 
         binding.refresh.setOnRefreshListener(() -> {
+            adapter.clean();
             mViewModel.getAllDesigns()
                     .observe(getViewLifecycleOwner(), this::onAllDesignsArrive);
 
@@ -87,6 +85,7 @@ public class MainFragment extends Fragment {
 
     private void onAllDesignsArrive(GetData<ArrayList<Design>> data) {
         binding.refresh.setRefreshing(false);
+
         binding.designs.setVisibility(View.VISIBLE);
         binding.designsPb.setVisibility(View.GONE);
         if (data == null || data.getCode() != 200) {
@@ -103,7 +102,7 @@ public class MainFragment extends Fragment {
             binding.searchByTags.setVisibility(View.GONE);
             return;
         }
-        AllDesignAdapter adapter = new AllDesignAdapter(new ArrayList<>());
+
         adapter.setItemOnClickListener((pos, id, object) -> {
             if (object.getVideoURL() != null) {
 
@@ -130,15 +129,14 @@ public class MainFragment extends Fragment {
             controller.navigate(R.id.action_homeFragment_to_distributorDesignFragment, bundle);
 
         });
-        binding.designs.setItemAnimator(new ScaleInAnimator());
 
-        binding.designs.setAdapter(adapter);
         for (int i = 0; i < data.getData().size(); i++) {
             if (this.isHidden() || this.isDetached()) break;
             int finalI = i;
             new Handler().postDelayed(() -> {
                 if (getActivity() == null) return;
                 getActivity().runOnUiThread(() -> {
+                    if (binding.refresh.isRefreshing()) return;
                     adapter.addNewDesign(data.getData().get(finalI));
                 });
             }, i * 300);

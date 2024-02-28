@@ -71,7 +71,7 @@ public class DesginImageSliderAdapter extends
 
         View itemView;
         ImageView imageViewBackground;
-        ImageView imageGifContainer;
+//        ImageView imageGifContainer;
         TextView textViewDescription;
         TextView designDesc;
         RecyclerView designTags;
@@ -79,7 +79,7 @@ public class DesginImageSliderAdapter extends
         public SliderAdapterVH(View itemView) {
             super(itemView);
             imageViewBackground = itemView.findViewById(R.id.iv_auto_image_slider);
-            imageGifContainer = itemView.findViewById(R.id.iv_gif_container);
+//            imageGifContainer = itemView.findViewById(R.id.iv_gif_container);
             textViewDescription = itemView.findViewById(R.id.tv_image_slider);
             designDesc = itemView.findViewById(R.id.tv_image_slider_desc);
             designTags = itemView.findViewById(R.id.tags);

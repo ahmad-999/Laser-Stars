@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
 
     android:layout_width="match_parent"
+    android:background="@color/main_color"
     android:layout_height="match_parent"
     tools:context=".ui.main.MainFragment">
 
@@ -52,7 +53,7 @@
                 app:spanCount="2"
 
                 tools:layout_editor_absoluteX="1dp"
-                tools:layout_editor_absoluteY="46dp"
+                tools:layout_editor_absoluteY="1dp"
                 tools:listitem="@layout/design_item" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -62,6 +63,9 @@
                 android:layout_margin="16dp"
                 android:src="@drawable/ic_baseline_search_24"
                 android:visibility="gone"
+                app:backgroundTint="#00667c"
+                app:tint="@color/white"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

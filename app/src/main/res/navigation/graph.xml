@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.kmm.laserstars.ui.main.MainFragment"
-        android:label="كل التصاميم"
+        android:label="ليزر ستارز"
         tools:layout="@layout/main_fragment" >
         <action
             android:id="@+id/action_homeFragment_to_designViewFragment"
@@ -107,6 +107,9 @@
         <argument
             android:name="names"
             app:argType="string[]" />
+        <action
+            android:id="@+id/action_searchByTagsFragment_to_distributorDesignFragment"
+            app:destination="@id/distributorDesignFragment" />
     </fragment>
     <fragment
         android:id="@+id/distributorDesignFragment"

@@ -117,6 +117,17 @@ public class SearchByTagsFragment extends Fragment {
             }
 
         });
+        adapter.setOnDesignOwnerClickListener((pos, id, distributor) -> {
+            NavController controller = NavHostFragment.findNavController(this);
+            String name = distributor.getName();
+            Bundle bundle = new Bundle();
+            bundle.putString("name", name);
+            bundle.putSerializable("distributor", distributor);
+            controller.navigate(R.id.action_searchByTagsFragment_to_distributorDesignFragment, bundle);
+
+        });
+
+
         binding.designs.setAdapter(adapter);
     }
 

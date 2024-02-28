@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
         binding = MainActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
-        setTitle("كل التصاميم");
+        setTitle("ليزر ستارز");
+
         Intent intent = getIntent();
         if (intent.hasExtra("route_name")) {
             int id = intent.getIntExtra("route_name", R.id.homeFragment);

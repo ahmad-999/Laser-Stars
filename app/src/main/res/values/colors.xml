@@ -12,4 +12,8 @@
     <color name="light_blue_A200">#FF40C4FF</color>
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
+    <color name="status_color">#332E29</color>
+    <color name="main_color">#453e38</color>
+<!--    <color name="main_color">#453e38</color>-->
+    <color name="secondery_color">#998d89</color>
 </resources>

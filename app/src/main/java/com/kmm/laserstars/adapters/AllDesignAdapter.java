@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.kmm.laserstars.databinding.DesignItemBinding;
 import com.kmm.laserstars.models.Design;
 import com.kmm.laserstars.models.User;
 import com.kmm.laserstars.services.API;
+import com.kmm.laserstars.util.Constant;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -49,7 +51,7 @@ public class AllDesignAdapter extends RecyclerView.Adapter<AllDesignAdapter.Hold
     }
 
     public void addNewDesign(Design design) {
-        designs.add(design);
+        this.designs.add(design);
         this.notifyItemInserted(designs.size());
     }
 
@@ -88,28 +90,38 @@ public class AllDesignAdapter extends RecyclerView.Adapter<AllDesignAdapter.Hold
 
         Glide.with(holder.itemView)
                 .asBitmap()
+                .skipMemoryCache(true)
                 .load(API.RES_URL + design.getUrl())
                 .dontAnimate()
                 .into(new CustomTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(@NonNull @NotNull Bitmap resource,
                                                 @Nullable Transition<? super Bitmap> transition) {
-                        int imageHeight = resource.getHeight();
-                        int imageWidth = resource.getWidth();
-
-                        int containerWidth = holder.binding.container.getMeasuredWidth();
-                        double ratio = (double) (containerWidth / imageWidth);
-                        ViewGroup.MarginLayoutParams
-                                layoutParams = new ViewGroup.MarginLayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                (int) (imageHeight * ratio));
-
-                        Bitmap dist = Bitmap.createScaledBitmap(resource,
-                                ViewGroup.LayoutParams.MATCH_PARENT, (int) (imageHeight * ratio)
-                                , false);
-                        resource.recycle();
-                        holder.binding.image.setLayoutParams(layoutParams);
-                        holder.binding.image.setImageBitmap(dist);
+                        try {
+                            int imageHeight = resource.getHeight();
+                            int imageWidth = resource.getWidth();
+                            double containerWidth;
+                            if (Constant.getAcceptedWidth() == -1) {
+                                containerWidth = holder.binding.container.getMeasuredWidth();
+                                Constant.SET_ACCEPTED_DIM(-1, containerWidth);
+                            } else containerWidth = Constant.getAcceptedWidth();
+                            double ratio = (double) (containerWidth / imageWidth);
+                            ViewGroup.MarginLayoutParams
+                                    layoutParams = new ViewGroup.MarginLayoutParams(
+                                    ViewGroup.LayoutParams.MATCH_PARENT,
+                                    (int) (imageHeight * ratio));
+                            int destWidth = (int) containerWidth;
+                            int destHeight = (int) (imageHeight * ratio);
+                            Log.d("ALL", String.format("width : %d , height : %d , name %s , index : %d ",
+                                    destWidth, destHeight, design.getName(), position));
+                            Bitmap dist = Bitmap.createScaledBitmap(resource, destWidth
+                                    , destHeight, false);
+//                        resource.recycle();
+                            holder.binding.image.setLayoutParams(layoutParams);
+                            holder.binding.image.setImageBitmap(dist);
+                        } catch (Exception e) {
+                            Log.e("ALL desing", design.getName(), e);
+                        }
                     }
 
                     @Override
@@ -153,6 +165,12 @@ public class AllDesignAdapter extends RecyclerView.Adapter<AllDesignAdapter.Hold
 
     public void setOnDesignOwnerClickListener(AdapterItemOnClick<User> onDesignOwnerClickListener) {
         this.onDesignOwnerClickListener = onDesignOwnerClickListener;
+    }
+
+    public void clean() {
+        int size = this.designs.size();
+        this.designs.clear();
+        this.notifyItemRangeRemoved(0, size);
     }
 
     public static class Holder extends RecyclerView.ViewHolder {

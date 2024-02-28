@@ -380,15 +380,7 @@ public class AddDesginFragment extends Fragment {
             binding.choosenImageContainer.setVisibility(View.VISIBLE);
             mViewModel.getUploadModel().postValue(true);
             designImagePath = getPathFromURI(data.getData(), false, false);
-            Bitmap bitmap = BitmapFactory.decodeFile(designImagePath);
-            if (bitmap == null) return;
-            int height = bitmap.getHeight();
-            int width = bitmap.getWidth();
-            if (!Constant.CHECK_IMAGE_DIM(height, width)) {
-                Toast.makeText(requireContext(),
-                        "لا يمكن استخدام هذه الصورة لانها لا تتبع حجم الصورة المطلوبة"
-                        , Toast.LENGTH_LONG).show();
-            }
+
         }
         if (requestCode == 103
                 && resultCode == Activity.RESULT_OK

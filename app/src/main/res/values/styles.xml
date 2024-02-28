@@ -2,6 +2,7 @@
 
     <style name="Widget.Theme.LaserStars.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@color/black_overlay</item>
+        <item name="android:statusBarColor">@color/status_color</item>
     </style>
 
     <style name="Widget.Theme.LaserStars.ButtonBar.Fullscreen" parent="">

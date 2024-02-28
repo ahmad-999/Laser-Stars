@@ -68,9 +68,9 @@ public class DesignViewFragment extends Fragment {
         DesginImageSliderAdapter adapter = new DesginImageSliderAdapter(desgins);
         binding.imageSlider.setSliderAdapter(adapter);
         binding.imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM);
-        binding.imageSlider.setScrollTimeInSec(2);
+        binding.imageSlider.setScrollTimeInSec(3);
         binding.imageSlider.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_RIGHT);
-        binding.imageSlider.setSliderTransformAnimation(SliderAnimations.ZOOMOUTTRANSFORMATION);
+        binding.imageSlider.setSliderTransformAnimation(SliderAnimations.CUBEINDEPTHTRANSFORMATION);
 //        binding.imageSlider.startAutoCycle();
 
         for (int i = 0; i < desgins.size(); i++) {

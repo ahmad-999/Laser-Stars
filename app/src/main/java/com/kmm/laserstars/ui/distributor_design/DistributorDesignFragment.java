@@ -33,6 +33,7 @@ public class DistributorDesignFragment extends Fragment {
 
     private DistributorDesignViewModel mViewModel;
     private DistributorDesignFragmentBinding binding;
+
     @Override
     public void onAttach(@NonNull @NotNull Context context) {
         ((MainActivity) requireActivity()).getSupportActionBar().hide();
@@ -45,6 +46,14 @@ public class DistributorDesignFragment extends Fragment {
         super.onDetach();
 
     }
+
+    @Override
+    public void onResume() {
+        if (((MainActivity) requireActivity()).getSupportActionBar() != null)
+            ((MainActivity) requireActivity()).getSupportActionBar().hide();
+        super.onResume();
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
